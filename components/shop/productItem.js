@@ -71,7 +71,8 @@ const s = StyleSheet.create({
     },
     title: {
         fontSize: 18,
-        marginVertical: 4
+        marginVertical: 2,
+        fontWeight: 'bold'
     },
     price: {
         fontSize: 14,

@@ -1,4 +1,4 @@
-import * as Font from 'expo-font'
+import * as Font from 'expo-font';
 
 export default fetchFont = () => {
     return Font.loadAsync({

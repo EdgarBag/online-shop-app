@@ -4,15 +4,18 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import productsReducers from './store/reducers/products'
+import cartReducers from './store/reducers/cart'
 import ShopNavigator from './navigations/ShopNavigator'
 import AppLoading from 'expo-app-loading'
 import loadFonts from './utils/fontSetup'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 const rootReducer = combineReducers({
-  products: productsReducers
+  products: productsReducers,
+  carts: cartReducers
 });
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, composeWithDevTools())
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
