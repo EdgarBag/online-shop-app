@@ -1,9 +1,10 @@
 import React from 'react'
 import { View, StyleSheet, FlatList, Button } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+
+// redux
 import { useSelector, useDispatch } from "react-redux";
 import * as cartActions from './../../store/actions/cart'
-
+import * as orderActions from './../../store/actions/orders'
 
 import TextBox from './../../components/TextBox'
 import CartItem from './../../components/shop/CartItem'
@@ -25,14 +26,13 @@ const CartScreen = props => {
     });
 
     const dispatch = useDispatch();
-    // console.log(cart.totalAmount, 'totla amount');
     return (
         <View style={s.screen}>
             <View style={s.totalContent}>
                 <TextBox style={s.summaryText}>Total:<TextBox style={s.amount}> ${cart.totalAmount.toFixed(2)}</TextBox></TextBox>
                 <Button title='Order Now'
                     color={colors.accent}
-                    onPress={() => console.log('order now button')}
+                    onPress={() => dispatch(orderActions.addOrder(cartItems, cart.totalAmount))}
                     disabled={cartItems.length === 0}
                 />
             </View>
