@@ -1,25 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     View, Text, Image,
     StyleSheet, Button,
     TouchableOpacity, TouchableNativeFeedback, Platform
 } from 'react-native'
-import TextBox from './../TextBox'
+import TextBox from '../TextBox'
 
-import colors from './../../utils/colors'
+import colors from '../../utils/colors'
 
 
 const ProductItem = props => {
-    const { imageUrl, title, price } = props.data;
+    const { imageUrl, title, price } = props.data,
+        [showDone, setShowDone] = useState(false);
+
     let TouchBox = Platform.OS === 'android' && Platform.Version >= 21
         ? TouchableNativeFeedback : TouchableOpacity;
+
+    const combinedAct = () => {
+        props.onAddToCart()
+        setShowDone(true)
+        setTimeout(() => {
+            setShowDone(false)
+        }, 2000);
+    }
 
     return <View style={s.productBox}>
         <View style={s.touchableBox}>
             <TouchBox onPress={props.onViewDetails} useForeground>
                 <View>
                     <View style={s.imgContainer}>
-                        <Image style={s.imageStyle} source={{ uri: imageUrl }} />
+                        <Image style={s.imageStyle}
+                            source={showDone ? require('./../../assets/img/done.png') : { uri: imageUrl }}
+                        />
                     </View>
                     <View style={s.details}>
                         <TextBox style={s.title}>{title}</TextBox>
@@ -27,7 +39,9 @@ const ProductItem = props => {
                     </View>
                     <View style={s.btnContainer}>
                         <Button color={colors.primary} title='View Details' onPress={props.onViewDetails} />
-                        <Button color={colors.primary} title='Add to Cart' onPress={props.onAddToCart} />
+                        <Button color={colors.primary} title='Add to Cart'
+                            onPress={combinedAct}
+                        />
                     </View>
                 </View>
             </TouchBox>

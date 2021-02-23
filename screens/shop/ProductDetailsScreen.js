@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, StyleSheet, Image, ScrollView, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -10,16 +10,25 @@ const ProductsDetailsScreen = props => {
     const productId = props.navigation.getParam('productId')
     const prodForDisplay = useSelector(state =>
         state.products.availableProducts.find(item => item.id === productId))
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(),
+        [showDone, setShowDone] = useState(false);
+
 
     return (
         <ScrollView>
-            <Image style={s.imageStyle} source={{ uri: prodForDisplay.imageUrl }} />
+            <Image style={s.imageStyle}
+                source={showDone ? require('./../../assets/img/done.png') : { uri: prodForDisplay.imageUrl }} />
             <View style={s.btnContainer}>
                 <Button
                     color={colors.primary}
                     title='Add To Cart'
-                    onPress={() => dispatch(cartActions.addToCart(prodForDisplay))} />
+                    onPress={() => {
+                        setShowDone(true)
+                        setTimeout(() => {
+                            setShowDone(false)
+                        }, 2000)
+                        dispatch(cartActions.addToCart(prodForDisplay))
+                    }} />
             </View>
             <TextBox style={s.price}>${prodForDisplay.price}</TextBox>
             <TextBox style={s.description}>{prodForDisplay.description}</TextBox>
@@ -34,8 +43,10 @@ ProductsDetailsScreen.navigationOptions = navData => {
 
 const s = StyleSheet.create({
     imageStyle: {
-        width: '100%',
-        height: 300
+        width: '95%',
+        height: 290,
+        margin: 10,
+        borderRadius: 10
     },
     price: {
         fontSize: 20,
