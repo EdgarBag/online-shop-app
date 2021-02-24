@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, FlatList, Button } from 'react-native';
+import { View, StyleSheet, FlatList, Button,  } from 'react-native';
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -32,7 +32,7 @@ const CartScreen = props => {
     return (
         <View style={s.screen}>
             <View style={s.totalContent}>
-                <TextBox style={s.summaryText}>Total:<TextBox style={s.amount}> ${cart.totalAmount.toFixed(2)}</TextBox></TextBox>
+                <TextBox style={s.summaryText}>Total:<TextBox style={s.amount}> ${Math.round(cart.totalAmount.toFixed(2)) * 100 / 100}</TextBox></TextBox>
                 <Button title='Order Now'
                     color={colors.accent}
                     onPress={() => dispatch(orderActions.addOrder(cartItems, cart.totalAmount))}

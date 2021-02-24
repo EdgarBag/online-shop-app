@@ -8,7 +8,7 @@ const OrderItem = props => {
     const { totalAmount, readableDate } = props.data,
         { items } = props,
         [showDetails, setShowDetails] = useState(false);
-    console.log(items, ' items need to ckeck img');
+
     return <View style={s.orderItem}>
         <View style={s.summary}>
             <TextBox style={s.totalAmount}>${totalAmount.toFixed(2)}</TextBox>

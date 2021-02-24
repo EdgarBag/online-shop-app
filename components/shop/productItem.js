@@ -26,11 +26,11 @@ const ProductItem = props => {
 
     return <View style={s.productBox}>
         <View style={s.touchableBox}>
-            <TouchBox onPress={props.onViewDetails} useForeground>
+            <TouchBox onPress={props.onSelect} useForeground>
                 <View>
                     <View style={s.imgContainer}>
                         <Image style={s.imageStyle}
-                            source={showDone ? require('./../../assets/img/done.png') : { uri: imageUrl }}
+                            source={props.done ? require('./../../assets/img/done.png') : { uri: imageUrl }}
                         />
                     </View>
                     <View style={s.details}>
@@ -38,10 +38,7 @@ const ProductItem = props => {
                         <TextBox style={s.price}>${price.toFixed(2)}</TextBox>
                     </View>
                     <View style={s.btnContainer}>
-                        <Button color={colors.primary} title='View Details' onPress={props.onViewDetails} />
-                        <Button color={colors.primary} title='Add to Cart'
-                            onPress={combinedAct}
-                        />
+                        {props.children}
                     </View>
                 </View>
             </TouchBox>
@@ -80,7 +77,7 @@ const s = StyleSheet.create({
     },
     details: {
         alignItems: 'center',
-        height: '15%',
+        height: '17%',
         padding: 10
     },
     title: {
@@ -97,7 +94,7 @@ const s = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        height: '25%',
+        height: '23%',
         paddingHorizontal: 25
     }
 })

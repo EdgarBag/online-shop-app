@@ -1,8 +1,12 @@
 import React from 'react'
-import { View, StyleSheet, FlatList, Platform } from 'react-native';
+import { View, StyleSheet, FlatList, Platform, Image } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useSelector } from 'react-redux'
 
+// utils
+import colors from './../../utils/colors'
+
+// components
 import TextBox from './../../components/TextBox'
 import HeaderButton from './../../components/UI/HeaderButtom'
 import OrderItem from './../../components/shop/OrderItem'
@@ -24,7 +28,17 @@ const OrdersScreen = props => {
                             navigation={props.navigation} />
                     }
                 /> :
-                <TextBox>There is now  Orders</TextBox>
+                <View style={s.emptyBoxCont}>
+                    <View style={s.sentBox}>
+                        <TextBox style={s.sent} numberOfLines={4}>There is now Orders. <TextBox style={s.clickHere}
+                            onPress={() =>
+                                props.navigation.navigate('Products')
+                            }>Click here</TextBox> to start buy!!!</TextBox>
+                    </View>
+                    <View >
+                        <Image style={s.emptybox} source={require('./../../assets/img/emptybox.png')} />
+                    </View>
+                </View>
             }
         </View>
     )
@@ -53,6 +67,29 @@ OrdersScreen.navigationOptions = navData => {
 const s = StyleSheet.create({
     itemsList: {
         height: '90%'
+    },
+    emptybox: {
+        width: 300,
+        height: 300
+    },
+    emptyBoxCont: {
+        height: '90%',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-around'
+    },
+    clickHere: {
+        fontSize: 20,
+        color: colors.primary,
+        fontWeight: 'bold'
+    },
+    sent: {
+        fontSize: 18,
+        textAlign: 'center',
+    },
+    sentBox: {
+        width: '60%',
+        justifyContent: 'space-evenly'
     }
 
 });
