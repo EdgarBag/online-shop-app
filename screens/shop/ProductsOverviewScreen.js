@@ -14,7 +14,7 @@ import HeaderButton from './../../components/UI/HeaderButtom'
 import colors from '../../utils/colors'
 
 
-const ProductsOverviewScreen = props => {
+const ProductsOverviewScreen = ({ navigation }) => {
 
     const products = useSelector(state => state.products.availableProducts),
         // const orders = useSelector(state => state.orders.orders)
@@ -22,7 +22,7 @@ const ProductsOverviewScreen = props => {
         [showDone, setShowDone] = useState(false)
 
     const selectItemHandler = (id, title) => {
-        props.navigation.navigate({
+        navigation.navigate({
             routeName: 'ProductDetails', params: {
                 productId: id,
                 productTitle: title

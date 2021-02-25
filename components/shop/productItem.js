@@ -4,7 +4,9 @@ import {
     StyleSheet, Button,
     TouchableOpacity, TouchableNativeFeedback, Platform
 } from 'react-native'
+
 import TextBox from '../TextBox'
+import Card from '../UI/Card'
 
 import colors from '../../utils/colors'
 
@@ -24,7 +26,7 @@ const ProductItem = props => {
         }, 2000);
     }
 
-    return <View style={s.productBox}>
+    return <Card style={s.productBox}>
         <View style={s.touchableBox}>
             <TouchBox onPress={props.onSelect} useForeground>
                 <View>
@@ -35,7 +37,7 @@ const ProductItem = props => {
                     </View>
                     <View style={s.details}>
                         <TextBox style={s.title}>{title}</TextBox>
-                        <TextBox style={s.price}>${price.toFixed(2)}</TextBox>
+                        <TextBox style={s.price}>$ {price.toFixed(2)}</TextBox>
                     </View>
                     <View style={s.btnContainer}>
                         {props.children}
@@ -43,18 +45,11 @@ const ProductItem = props => {
                 </View>
             </TouchBox>
         </View>
-    </View>
+    </Card>
 }
 
 const s = StyleSheet.create({
     productBox: {
-        shadowColor: 'black',
-        shadowOpacity: 0.26,
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 8,
-        elevation: 5,
-        borderRadius: 10,
-        backgroundColor: 'white',
         height: 300,
         margin: 20,
         overflow: 'hidden'
