@@ -13,7 +13,7 @@ const CartItem = props => {
     // if (Platform.OS === 'android' && Platform.Version >= 21) {
     //     TouchBox = TouchableNativeFeedback;
     // }
-
+    console.log(props.item, ' props item');
     return (
 
         <View style={s.touchBox}>
