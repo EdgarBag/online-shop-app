@@ -21,7 +21,6 @@ const OrdersScreen = props => {
                     data={order}
                     keyExtractor={item => item.id}
                     renderItem={itemData =>
-                        // console.log(itemData.item, 'itemData item');
                         <OrderItem
                             data={itemData.item}
                             items={itemData.item.items}

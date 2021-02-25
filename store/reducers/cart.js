@@ -60,10 +60,8 @@ export default (state = initialState, action) => {
         case DELETE_PRODUCT:
 
             if (!state.items[action.prodId]) {
-                console.log('into if');
                 return state;
             }
-            console.log('outside of if');
             const updatedItems = { ...state.items };
             const itemTotal = state.items[action.prodId].sum;
             delete updatedItems[action.prodId]

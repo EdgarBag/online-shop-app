@@ -3,6 +3,7 @@ import { createAppContainer } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack';
 import { Platform } from 'react-native';
 import { createDrawerNavigator } from "react-navigation-drawer";
+// import { createDrawerNavigator } from '@react-navigation/drawer'
 
 // screens
 import ProductOverviewScreen from './../screens/shop/ProductsOverviewScreen'
@@ -71,13 +72,20 @@ const AdminNavigator = createStackNavigator({
             />
         )
     },
-    defaultNavigationOptions: defaultNavOptions
+    defaultNavigationOptions: {
+        headerStyle: {
+            backgroundColor: Platform.OS === 'android' ? colors.userColor : 'white'
+        },
+        headerTintColor: Platform.OS === 'android' ? 'white' : colors.primary,
+        headerTitleStyle: 'caviar_d_bold',
+        headerBackTitleStyle: 'caviar_d_italic'
+    },
 })
 
 const ShopNavigator = createDrawerNavigator({
-    Products: ProductsNavigator,
-    Orders: OrdersNavigator,
-    Admin: AdminNavigator
+    Products: { screen: ProductsNavigator },
+    Orders: { screen: OrdersNavigator },
+    Admin: { screen: AdminNavigator }
 }, {
     contentOptions: {
         activeTintColor: colors.primary

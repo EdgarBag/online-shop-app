@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity, Platform, Image, TouchableNativeFee
 import { Ionicons } from '@expo/vector-icons'
 
 import TextBox from './../TextBox'
+import Card from '../UI/Card'
 import colors from '../../utils/colors';
 
 const CartItem = props => {
@@ -21,9 +22,8 @@ const CartItem = props => {
                     productId: productId,
                     productTitle: productTitle
                 }
-            })}
-                useForeground>
-                <View style={s.cartItem}>
+            })} useForeground>
+                <Card style={s.cartItem}>
                     <View style={s.summaryBox}>
                         <View style={s.itemData}>
                             <TextBox style={s.qty}>{productQuantity}{' '}</TextBox>
@@ -44,7 +44,7 @@ const CartItem = props => {
                     <View style={s.image}>
                         <Image style={s.itemImage} source={{ uri: imageUrl }} />
                     </View>
-                </View>
+                </Card>
             </TouchableOpacity>
         </View>
     )
@@ -53,16 +53,8 @@ const CartItem = props => {
 
 const s = StyleSheet.create({
     cartItem: {
-        shadowColor: colors.primary,
-        shadowOpacity: 0.26,
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 8,
-        elevation: 5,
-        borderRadius: 10,
-        // backgroundColor: 'white',
         padding: 10,
         margin: 10,
-        backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: 10,

@@ -1,4 +1,5 @@
-import { DELETE_PRODUCT } from '../actions/products';
+import Product from '../../models/product';
+import { CREATE_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT } from '../actions/products';
 import PRODUCTS from './../../data/dummy-data'
 
 const initialState = {
@@ -8,6 +9,44 @@ const initialState = {
 
 export default (state = initialState, action) => {
     switch (action.type) {
+
+        case CREATE_PRODUCT:
+            const newProduct = new Product(
+                new Date().toString(),
+                'u1',
+                action.newProd.title,
+                action.newProd.imageUrl,
+                action.newProd.description,
+                action.newProd.price);
+
+            return {
+                ...state,
+                availableProducts: state.availableProducts.concat(newProduct),
+                userProducts: state.userProducts.concat(newProduct)
+            }
+
+        case UPDATE_PRODUCT:
+            const prodIndex = state.userProducts.findIndex(prod => prod.id === action.prodId);
+            const updatedProd = new Product(
+                action.prodId,
+                state.userProducts[prodIndex].ownerId,
+                action.prodToUpdate.title,
+                action.prodToUpdate.imageUrl,
+                action.prodToUpdate.description,
+                state.userProducts[prodIndex].price
+            );
+            const updatedUserProducts = [...state.userProducts];
+            updatedUserProducts[prodIndex] = updatedProd;
+            const availableProdIndes = state.availableProducts.findIndex(prod => prod.id === action.prodId)
+            const updatedAvaiProd = [...state.availableProducts];
+            updatedAvaiProd[availableProdIndes] = updatedProd
+
+            return {
+                ...state,
+                availableProducts: updatedAvaiProd,
+                userProducts: updatedUserProducts
+            }
+
         case DELETE_PRODUCT:
             return {
                 ...state,
