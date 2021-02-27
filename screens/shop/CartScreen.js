@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, FlatList, Button,  } from 'react-native';
+import { View, StyleSheet, FlatList, Button, } from 'react-native';
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -31,6 +31,9 @@ const CartScreen = props => {
 
     return (
         <View style={s.screen}>
+            <View style={s.goToOrders}>
+                <TextBox style={s.goToText} onPress={() => props.navigation.navigate('Orders')}> Go to my Order list</TextBox>
+            </View>
             <View style={s.totalContent}>
                 <TextBox style={s.summaryText}>Total:<TextBox style={s.amount}> ${Math.round(cart.totalAmount.toFixed(2)) * 100 / 100}</TextBox></TextBox>
                 <Button title='Order Now'
@@ -90,7 +93,15 @@ const s = StyleSheet.create({
     flatList: {
         // borderWidth: 'black', borderWidth: 1,
         height: '80%'
-
+    },
+    goToOrders: {
+        paddingVertical: 15
+    },
+    goToText: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: 'blue',
+        textDecorationLine: 'underline'
     }
 
 });
