@@ -21,6 +21,7 @@ const ProductsOverviewScreen = ({ navigation }) => {
         // const orders = useSelector(state => state.orders.orders)
         dispatch = useDispatch(),
         [isLoading, setIsloading] = useState(false),
+        [isRefreshing, setIsRefreshing] = useState(false),
         [err, setErr] = useState('')
 
     const selectItemHandler = (id, title) => {
@@ -37,17 +38,19 @@ const ProductsOverviewScreen = ({ navigation }) => {
     }
 
     const loadProds = useCallback(async () => {
-        setIsloading(true)
+        setErr(null)
+        setIsRefreshing(true)
         try {
             await dispatch(productAction.fetchProducts())
         } catch (error) {
             setErr(error.message)
         }
-        setIsloading(false)
+        setIsRefreshing(false)
     }, [dispatch, setIsloading, setErr]);
 
     useEffect(() => {
-        loadProds();
+        setIsloading(true)
+        loadProds().then(() => setIsloading(false));
     }, [dispatch, loadProds]);
 
     useEffect(() => {
@@ -82,6 +85,8 @@ const ProductsOverviewScreen = ({ navigation }) => {
 
     return (
         <FlatList
+            onRefresh={loadProds}
+            refreshing={isRefreshing}
             data={products}
             keyExtractor={item => item.id}
             renderItem={itemData => <ProductItem

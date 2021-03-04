@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, StyleSheet, FlatList, Button, } from 'react-native';
+import React, { useState, useEffect } from 'react'
+import { View, StyleSheet, FlatList, Button, ActivityIndicator } from 'react-native';
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -11,7 +11,8 @@ import CartItem from './../../components/shop/CartItem'
 import colors from './../../utils/colors'
 
 const CartScreen = props => {
-    const cart = useSelector(state => state.carts);
+    const cart = useSelector(state => state.carts),
+        [isLoading, setIsloading] = useState(false);
 
     const cartItems = useSelector(state => {
         const transformeredItems = [];
@@ -29,6 +30,14 @@ const CartScreen = props => {
 
     const dispatch = useDispatch();
 
+    const sendOrderHandler = async () => {
+        setIsloading(true)
+        await dispatch(orderActions.addOrder(cartItems, cart.totalAmount))
+        setIsloading(false)
+    }
+
+
+
     return (
         <View style={s.screen}>
             <View style={s.goToOrders}>
@@ -36,11 +45,20 @@ const CartScreen = props => {
             </View>
             <View style={s.totalContent}>
                 <TextBox style={s.summaryText}>Total:<TextBox style={s.amount}> ${Math.round(cart.totalAmount.toFixed(2)) * 100 / 100}</TextBox></TextBox>
-                <Button title='Order Now'
-                    color={colors.accent}
-                    onPress={() => dispatch(orderActions.addOrder(cartItems, cart.totalAmount))}
-                    disabled={cartItems.length === 0}
-                />
+
+                {isLoading ?
+                    <ActivityIndicator
+                        size='small'
+                        color={colors.primary} />
+                    :
+                    <Button title='Order Now'
+                        color={colors.accent}
+                        onPress={sendOrderHandler}
+                        disabled={cartItems.length === 0}
+                    />}
+
+
+
             </View>
             <FlatList
                 style={s.flatList}
@@ -57,7 +75,7 @@ const CartScreen = props => {
                         navigation={props.navigation}
                     />}
             />
-        </View>)
+        </View >)
 }
 
 CartScreen.navigationsOprions = {
@@ -102,6 +120,11 @@ const s = StyleSheet.create({
         fontWeight: 'bold',
         color: 'blue',
         textDecorationLine: 'underline'
+    },
+    indicator: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 
 });

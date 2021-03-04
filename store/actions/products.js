@@ -89,7 +89,7 @@ export const updateProduct = (id, title, description, imageUrl) => {
         });
 
         if (!response.ok) {
-            console.log('into throw something went wrong');
+            // console.log('into throw something went wrong');
             throw new Error('Something went wrong!')
         }
         // const resData = await response.json();

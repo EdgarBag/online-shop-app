@@ -1,8 +1,9 @@
-import React from 'react'
-import { View, StyleSheet, FlatList, Platform, Image } from 'react-native';
+import React, { useEffect, useState } from 'react'
+import { View, StyleSheet, FlatList, Platform, Image, ActivityIndicator } from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useSelector } from 'react-redux'
 
+import { useSelector, useDispatch } from 'react-redux'
+import * as  orderActions from './../../store/actions/orders'
 // utils
 import colors from './../../utils/colors'
 
@@ -12,10 +13,28 @@ import HeaderButton from './../../components/UI/HeaderButtom'
 import OrderItem from './../../components/shop/OrderItem'
 
 const OrdersScreen = props => {
-    const order = useSelector(state => state.orders.orders)
+    const order = useSelector(state => state.orders.orders),
+        [isLoading, setIsloading] = useState(false),
+        dispatch = useDispatch();
+
+    useEffect(() => {
+        setIsloading(true)
+        dispatch(orderActions.fetchOrders()).then(() => {
+            setIsloading(false)
+        })
+    }, [dispatch])
+
+
+
+    if (isLoading) {
+        return <View style={s.indicator}>
+            <ActivityIndicator size="small" color={colors.primary} />
+        </View>
+    }
+    
     return (
         <View>
-            {order.length ?
+            {order.length > 0 && !isLoading ?
                 <FlatList
                     style={s.itemsList}
                     data={order}
@@ -89,6 +108,11 @@ const s = StyleSheet.create({
     sentBox: {
         width: '60%',
         justifyContent: 'space-evenly'
+    },
+    indicator: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 
 });
