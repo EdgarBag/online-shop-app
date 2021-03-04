@@ -18,12 +18,20 @@ const UserProductScreen = props => {
         props.navigation.navigate('EditProducts', { productId: id })
     }
 
+    const onDelete = async (id) => {
+        try {
+            await dispatch(productActions.deleteProduct(id))
+        } catch (error) {
+            await Alert.alert('An error accured', error.message, [{ text: 'Okay' }])
+        }
+    }
+
     const deleteHandler = (id) => {
         Alert.alert('Are you sure?', 'Do you want to delete this product?', [
             { text: 'No', style: 'default' },
             {
                 text: 'Yes', style: 'destructive',
-                onPress: () => { dispatch(productActions.deleteProduct(id)) }
+                onPress: () => { onDelete(id) }
             }
         ])
     }

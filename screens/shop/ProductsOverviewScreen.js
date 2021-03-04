@@ -17,7 +17,6 @@ import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
 const ProductsOverviewScreen = ({ navigation }) => {
-    console.log('loaded products page');
     const products = useSelector(state => state.products.availableProducts),
         // const orders = useSelector(state => state.orders.orders)
         dispatch = useDispatch(),

@@ -1,12 +1,12 @@
-import React, { useEffect, useCallback, useReducer } from 'react'
+import React, { useState, useEffect, useCallback, useReducer } from 'react'
 import {
     View, StyleSheet, TextInput,
     ScrollView, Button, Platform,
-    Alert, KeyboardAvoidingView
+    Alert, KeyboardAvoidingView, ActivityIndicator,
 } from 'react-native'
 
 // redux
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch, useStore } from 'react-redux'
 import * as  productActions from './../../store/actions/products'
 
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -14,6 +14,7 @@ import HeaderButton from '../../components/UI/HeaderButtom'
 import TextBox from './../../components/TextBox'
 
 import InputBox from './../../components/UI/InputBox'
+import colors from '../../utils/colors';
 
 const FORM_UPDATE = 'FORM_UPDATE'
 const formReducer = (state, action) => {
@@ -42,7 +43,8 @@ const formReducer = (state, action) => {
 }
 
 const EditProductScreen = props => {
-
+    const [isLoading, setIsLoading] = useState(false),
+        [error, setError] = useState();
     const prodId = props.navigation.getParam('productId'),
         editedProduct = useSelector(state =>
             state.products.userProducts.find(prod => prod.id === prodId));
@@ -65,6 +67,12 @@ const EditProductScreen = props => {
         formIsValid: editedProduct ? true : false
     });
 
+    useEffect(() => {
+        if (error) {
+            Alert.alert('An error accured', error, [{ text: 'Okay' }])
+        }
+    }, [error])
+
     const findFalseValid = array => {
         for (const key in array) {
             let value = formState.inputValidities[key];
@@ -74,7 +82,7 @@ const EditProductScreen = props => {
         }
     }
 
-    const submitHandler = useCallback(() => {
+    const submitHandler = useCallback(async () => {
 
         if (!formState.formIsValid) {
             let falseInput = findFalseValid(formState.inputValidities);
@@ -84,20 +92,28 @@ const EditProductScreen = props => {
             ]);
             return;
         }
+        setError(null)
+        setIsLoading(true);
+        try {
+            if (editedProduct) {
+                await dispatch(productActions.updateProduct(prodId,
+                    formState.inputValues.title,
+                    formState.inputValues.description,
+                    formState.inputValues.imageUrl))
+            } else {
+                await dispatch(productActions.createProduct(formState.inputValues.title,
+                    formState.inputValues.description,
+                    formState.inputValues.imageUrl,
+                    +formState.inputValues.price))
+            };
+            props.navigation.goBack();
 
-        if (editedProduct) {
-            dispatch(productActions.updateProduct(prodId,
-                formState.inputValues.title,
-                formState.inputValues.description,
-                formState.inputValues.imageUrl))
-        } else {
-            dispatch(productActions.createProduct(formState.inputValues.title,
-                formState.inputValues.description,
-                formState.inputValues.imageUrl,
-                +formState.inputValues.price))
-        };
+        } catch (err) {
+            setError(err.message)
+        }
 
-        props.navigation.goBack();
+        setIsLoading(false)
+
     }, [dispatch, formState.inputValues.title,
         formState.inputValues.description,
         formState.inputValues.imageUrl,
@@ -106,11 +122,9 @@ const EditProductScreen = props => {
     useEffect(() => {
         props.navigation.setParams({ submit: submitHandler })
     }, [submitHandler])
-    
 
 
     const textChangeHandler = (inputIdentifier, text) => {
-        
         let isValidToCheck = false
         if (text.trim().length > 0) {
             isValidToCheck = true
@@ -122,6 +136,15 @@ const EditProductScreen = props => {
             input: inputIdentifier
         })
     }
+
+    if (isLoading) {
+        return (<View style={s.activIndicator}>
+            <ActivityIndicator
+                size='large'
+                color={colors.primary} />
+        </View>)
+    }
+
 
     return (<KeyboardAvoidingView
         style={{ flex: 1 }}
@@ -143,7 +166,6 @@ const EditProductScreen = props => {
                     onChangeHandler={textChangeHandler.bind(this, 'imageUrl')}
                     errorMsg={'Please insert image URL.'}
                 />
-
                 {editedProduct ? null : <InputBox
                     label='Price'
                     inputValue={formState.inputValues.price}
@@ -167,12 +189,10 @@ const s = StyleSheet.create({
     formBox: {
         margin: 20,
     },
-
-    input: {
-        paddingHorizontal: 2,
-        paddingVertical: 5,
-        borderBottomColor: '#ccc',
-        borderBottomWidth: 1
+    activIndicator: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 
