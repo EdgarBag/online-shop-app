@@ -34,7 +34,7 @@ export const fetchProducts = () => {
 
 export const deleteProduct = id => {
     return async dispatch => {
-        const res = await fetch(`https://online-shop-app-97090-default-rtdb.firebaseio.com/products/${id}.jsson`,
+        const res = await fetch(`https://online-shop-app-97090-default-rtdb.firebaseio.com/products/${id}.json`,
             {
                 method: 'DELETE'
             });
@@ -78,7 +78,7 @@ export const updateProduct = (id, title, description, imageUrl) => {
     return async dispatch => {
         // any async code
 
-        const response = await fetch(`https://online-shop-app-97090-default-rtdb.firebaseio.com/products/${id}.jon`, {
+        const response = await fetch(`https://online-shop-app-97090-default-rtdb.firebaseio.com/products/${id}.json`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
