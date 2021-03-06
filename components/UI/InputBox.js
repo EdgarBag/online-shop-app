@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, TextInput } from 'react-native'
 import { useState } from 'react/cjs/react.development'
-import TextBox from './../TextBox'
+import TextBox from './TextBox'
 
 const InputBox = props => {
     const { label, onChangeHandler, inputValue } = props,

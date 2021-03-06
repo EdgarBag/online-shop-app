@@ -5,7 +5,7 @@ import {
     TouchableOpacity, TouchableNativeFeedback, Platform
 } from 'react-native'
 
-import TextBox from '../TextBox'
+import TextBox from '../UI/TextBox'
 import Card from '../UI/Card'
 
 import colors from '../../utils/colors'

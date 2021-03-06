@@ -8,7 +8,7 @@ import * as  orderActions from './../../store/actions/orders'
 import colors from './../../utils/colors'
 
 // components
-import TextBox from './../../components/TextBox'
+import TextBox from '../../components/UI/TextBox'
 import HeaderButton from './../../components/UI/HeaderButtom'
 import OrderItem from './../../components/shop/OrderItem'
 

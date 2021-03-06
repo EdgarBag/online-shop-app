@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Button } from 'react-native';
 import CartItem from './CartItem'
-import TextBox from './../TextBox';
+import TextBox from '../UI/TextBox';
 import Card from '../UI/Card'
 import colors from './../../utils/colors'
 

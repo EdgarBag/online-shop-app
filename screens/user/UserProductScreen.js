@@ -3,7 +3,7 @@ import { View, StyleSheet, FlatList, Button, Alert } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 import * as productActions from './../../store/actions/products'
 
-import TextBox from './../../components/TextBox'
+import TextBox from '../../components/UI/TextBox'
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import ProductItem from './../../components/shop/ProductItem'

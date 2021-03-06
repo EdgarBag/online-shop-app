@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet, TouchableOpacity, Platform, Image, TouchableNativeFeedback } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
-import TextBox from './../TextBox'
+import TextBox from '../UI/TextBox'
 import Card from '../UI/Card'
 import colors from '../../utils/colors';
 

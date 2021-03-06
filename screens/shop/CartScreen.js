@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as cartActions from './../../store/actions/cart'
 import * as orderActions from './../../store/actions/orders'
 
-import TextBox from './../../components/TextBox'
+import TextBox from '../../components/UI/TextBox'
 import CartItem from './../../components/shop/CartItem'
 import colors from './../../utils/colors'
 

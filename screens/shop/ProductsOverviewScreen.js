@@ -6,7 +6,7 @@ import { useSelector, useDispatch, } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 // components
-import TextBox from './../../components/TextBox'
+import TextBox from '../../components/UI/TextBox'
 import ProductItem from '../../components/shop/ProductItem'
 import * as cartActions from './../../store/actions/cart'
 import * as productAction from './../../store/actions/products'

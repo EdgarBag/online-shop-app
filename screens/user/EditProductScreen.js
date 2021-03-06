@@ -11,7 +11,7 @@ import * as  productActions from './../../store/actions/products'
 
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from '../../components/UI/HeaderButtom'
-import TextBox from './../../components/TextBox'
+import TextBox from '../../components/UI/TextBox'
 
 import InputBox from './../../components/UI/InputBox'
 import colors from '../../utils/colors';

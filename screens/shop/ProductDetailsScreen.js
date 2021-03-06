@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, StyleSheet, Image, ScrollView, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
-import TextBox from './../../components/TextBox'
+import TextBox from '../../components/UI/TextBox'
 import colors from './../../utils/colors'
 import * as cartActions from './../../store/actions/cart'
 
