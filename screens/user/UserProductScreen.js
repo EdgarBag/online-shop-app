@@ -36,6 +36,14 @@ const UserProductScreen = props => {
         ])
     }
 
+    if (userProducts.length === 0) {
+        return (
+            <View style={s.noProductsBox}>
+                <TextBox style={s.noProdSent}>No products found.Start creating!</TextBox>
+            </View>
+        )
+    }
+
     return (
         <FlatList
             data={userProducts}
@@ -80,6 +88,14 @@ UserProductScreen.navigationOptions = navData => {
 
 
 const s = StyleSheet.create({
-
+    noProductsBox: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    noProdSent: {
+        fontSize: 20,
+        fontWeight: 'bold'
+    }
 });
 export default UserProductScreen

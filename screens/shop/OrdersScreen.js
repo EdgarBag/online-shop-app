@@ -25,13 +25,12 @@ const OrdersScreen = props => {
     }, [dispatch])
 
 
-
     if (isLoading) {
         return <View style={s.indicator}>
             <ActivityIndicator size="small" color={colors.primary} />
         </View>
     }
-    
+
     return (
         <View>
             {order.length > 0 && !isLoading ?
