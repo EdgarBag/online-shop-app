@@ -1,10 +1,12 @@
 import React from 'react'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack';
-import { Platform } from 'react-native';
-import { createDrawerNavigator } from "react-navigation-drawer";
+import { Platform, SafeAreaView, Button, View } from 'react-native';
+import { createDrawerNavigator, DrawerItems, DrawerNavigatorItems } from "react-navigation-drawer";
 // import { createDrawerNavigator } from '@react-navigation/drawer'
 
+import * as authActions from './../store/actions/auth'
+import { useDispatch } from 'react-redux'
 // screens
 import ProductOverviewScreen from './../screens/shop/ProductsOverviewScreen'
 import ProductDetailsScreen from './../screens/shop/ProductDetailsScreen'
@@ -13,6 +15,7 @@ import OrdersScreen from './../screens/shop/OrdersScreen'
 import UserProductScreen from './../screens/user/UserProductScreen'
 import EditProductsScreen from './../screens/user/EditProductScreen'
 import AuthScreen from './../screens/user/AuthScreen'
+import StartupScreen from "./../screens/StartupScreen";
 
 //utils
 import colors from './../utils/colors'
@@ -89,6 +92,22 @@ const ShopNavigator = createDrawerNavigator({
 }, {
     contentOptions: {
         activeTintColor: colors.primary
+    },
+    contentComponent: props => {
+        const dispatch = useDispatch();
+        return (<View style={{ flex: 1, padding: 25 }}>
+            <SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+                <DrawerNavigatorItems {...props} />
+                <Button
+                    title='Logout'
+                    color={colors.primary}
+                    onPress={() => {
+                        dispatch(authActions.logOut())
+                        props.navigation.navigate('Auth')
+                    }}
+                />
+            </SafeAreaView>
+        </View>)
     }
 });
 
@@ -97,6 +116,7 @@ const AuthNavigator = createStackNavigator({
 }, { defaultNavigationOptions: defaultNavOptions });
 
 const MainNavigator = createSwitchNavigator({
+    StartScreen: StartupScreen,
     Auth: AuthNavigator,
     Shop: ShopNavigator
 })
