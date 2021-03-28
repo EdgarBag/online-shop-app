@@ -49,7 +49,7 @@ const AuthScreen = (props) => {
     const dispatch = useDispatch(),
         [isSignUp, setIsSignUp] = useState(false),
         [isLoading, setIsloading] = useState(false),
-        [err, setErr] = useState()
+        [err, setErr] = useState('')
 
     const [formState, dispatchFormState] = useReducer(formReducer, {
         inputValues: {

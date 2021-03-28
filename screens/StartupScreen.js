@@ -11,9 +11,9 @@ const StartupScreen = props => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        console.log('start');
+        // console.log('start');
         const tryLogin = async () => {
-            console.log('1');
+            // console.log('1');
             const userData = await AsyncStorage.getItem('userData')
             if (!userData) {
                 console.log('there is now data user');
@@ -30,9 +30,11 @@ const StartupScreen = props => {
                 return
             }
 
+            const expirationTime = expirationDate.getTime() - new Date().getTime()
             props.navigation.navigate('Shop')
-            dispatch(authActions.authenticate(userId, token))
+            dispatch(authActions.authenticate(userId, token, expirationTime))
         }
+
         tryLogin()
 
 
